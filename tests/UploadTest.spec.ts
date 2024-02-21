@@ -15,15 +15,13 @@ test('Generate Text File and upload to Google Drive', async ({ }) => {
 
     // Call the function to generate the text file
     generateTextFile(filePath, textContent).catch(console.error);
-    // Usage
+
     const envFilePath = 'env/Test.env';
     const envVariables = readEnvFile(envFilePath);
 
     // Now you can access environment variables like normal
     console.log();
     const page: Page = await loginToGoogleDrive(envVariables['EMAIL'],envVariables['PASSWORD']);
-    
-    page.waitForNavigation();
     
     await uploadFileToGoogleDrive(page, filePath);
 

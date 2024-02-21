@@ -1,5 +1,12 @@
 import { chromium, Browser, Page } from 'playwright';
 import { setTimeout } from "timers/promises";
+import dotenv from 'dotenv';
+import path from 'path';
+import {readEnvFile} from './../utils/utils.spec';
+
+dotenv.config({ path: path.resolve(__dirname, '..', 'my.env') });
+const envFilePath = 'env/Test.env';
+const envVariables = readEnvFile(envFilePath);
 
 export async function loginToGoogleDrive(username: string, password: string): Promise<Page> {
     // Launch the browser
@@ -56,7 +63,7 @@ export async function loginToGoogleDrive(username: string, password: string): Pr
         if(await newPage.isVisible('text="Confirm your recovery email"')){
                 
             await newPage.click('text="Confirm your recovery email"');            
-            await newPage.type('input[type="email"]', 'mrbhautikbpatel@gmail.com');
+            await newPage.type('input[type="email"]', envVariables['RECOVERY_EMAIL']);
             // Click on the "Next" button
             await newPage.click('text="Next"');
             await newPage.click('text="Not now"');
